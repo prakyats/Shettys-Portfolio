@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ALGORITHMIC_IDENTITY | System Architect Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-dim": "#020617",
+              "inverse-primary": "#475569",
+              "tertiary": "#94a3b8",
+              "on-surface-variant": "#64748b",
+              "on-secondary-container": "#94a3b8",
+              "on-tertiary-fixed": "#020617",
+              "on-primary-fixed-variant": "#475569",
+              "secondary-dim": "#334155",
+              "primary-fixed": "#f1f5f9",
+              "surface-container-high": "#0f172a",
+              "primary-container": "#1e293b",
+              "on-primary": "#f8fafc",
+              "surface-variant": "#020617",
+              "error-container": "#450a0a",
+              "inverse-on-surface": "#f8fafc",
+              "on-error-container": "#fca5a5",
+              "tertiary-container": "#0f172a",
+              "on-secondary-fixed-variant": "#475569",
+              "secondary-container": "#0f172a",
+              "outline": "#1e293b",
+              "surface-container-highest": "#0f172a",
+              "tertiary-dim": "#64748b",
+              "surface-container-lowest": "#010409",
+              "secondary": "#64748b",
+              "on-background": "#f8fafc",
+              "surface": "#020617",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed": "#1e293b",
+              "on-primary-container": "#f1f5f9",
+              "background": "#020617",
+              "surface-container": "#050b18",
+              "on-tertiary-container": "#94a3b8",
+              "surface-container-low": "#030816",
+              "primary-fixed-dim": "#cbd5e1",
+              "tertiary-fixed-dim": "#64748b",
+              "on-error": "#ffffff",
+              "primary": "#f8fafc",
+              "surface-tint": "#f8fafc",
+              "surface-bright": "#1e293b",
+              "secondary-fixed-dim": "#94a3b8",
+              "on-tertiary-fixed-variant": "#334155",
+              "on-primary-fixed": "#0f172a",
+              "inverse-surface": "#f8fafc",
+              "on-secondary": "#f8fafc",
+              "tertiary-fixed": "#64748b",
+              "error": "#ef4444",
+              "on-surface": "#f1f5f9",
+              "error-dim": "#ef4444",
+              "primary-dim": "#cbd5e1",
+              "outline-variant": "#0f172a",
+              "secondary-fixed": "#f1f5f9"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0px", "lg": "0.125rem", "xl": "0.25rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #020617;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+        }
+        ::selection {
+            background-color: rgba(148, 163, 184, 0.2);
+            color: #f1f5f9;
+        }
+        .hero-portrait-mini {
+            position: fixed;
+            top: 120px;
+            right: 40px;
+            width: 120px;
+            height: 160px;
+            opacity: 0;
+            transform: translateX(50px) scale(0.8);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 40;
+            pointer-events: none;
+        }
+        .hero-portrait-mini.visible {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            pointer-events: auto;
+        }
+        .glass {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="font-body text-on-surface antialiased selection:bg-tertiary/20">
+<!-- Navigation Shell -->
+<nav class="fixed top-0 w-full z-50 bg-surface/40 backdrop-blur-xl border-b border-white/5">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-8 md:px-12 h-20">
+<div class="text-xs font-bold tracking-[0.3em] text-on-surface font-headline uppercase">
+            ALGORITHMIC_IDENTITY
+        </div>
+<div class="hidden md:flex items-center gap-12 font-headline text-[10px] uppercase tracking-widest text-on-surface-variant">
+<a class="text-on-surface font-semibold hover:text-tertiary transition-colors" href="#now">Now</a>
+<a class="hover:text-on-surface transition-colors" href="#projects">Work</a>
+<a class="hover:text-on-surface transition-colors" href="#growth">Growth</a>
+<a class="hover:text-on-surface transition-colors" href="#beyond">Beyond</a>
+</div>
+<button class="border border-outline text-on-surface-variant px-5 py-2 rounded-none text-[10px] uppercase tracking-widest font-medium hover:bg-on-surface hover:text-surface transition-all">
+            Resume
+        </button>
+</div>
+</nav>
+<!-- Persistent Mini Profile (Appears on scroll) -->
+<div class="hero-portrait-mini glass p-1" id="sticky-profile">
+<img alt="portrait small" class="w-full h-full object-cover grayscale brightness-75" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAMjGKTFQDQUQSy3ZdpT7BQYxb6MqydHMdk6tjRgyM_paPdtcII863BbkduXnGvLWm_z7qDN_LeTdGZKhZufwsPz0wX6tdtIqNyO4Ox-Aagu4YwxU5zAzgOTNGFHlZ5DrfViGZY40LT2Fu4_OJMGA_MQlp7okA0qnI7e8Yy9UaRh0hcVvco3eWyV7qBeKNgh_ztJ3au_33WJDznt1clWcRtrdtizkUvv2nGHNdl7XgOmHbQoEK8hSALKCsJH8g24t2XlntKrGPypDF"/>
+</div>
+<main class="w-full">
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center pt-20 px-8 md:px-12 overflow-hidden" id="hero">
+<div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 items-center relative z-10 p-12 border border-white/10 bg-white/[0.02] backdrop-blur-sm rounded-[24px] gap-16">
+<div class="lg:col-span-7 space-y-16">
+<div class="inline-flex items-center gap-3 text-on-surface-variant text-[9px] font-mono uppercase tracking-[0.4em]">
+<span class="w-1 h-1 rounded-full bg-on-surface-variant opacity-40"></span>
+                    Available for Internship
+                </div>
+<h1 class="text-7xl md:text-[7rem] font-headline font-bold text-on-surface leading-[0.85] tracking-tighter">
+                    Learning.<br/>
+                    Building.<br/>
+<span class="text-on-surface-variant/40">Getting better every day.</span>
+</h1>
+<p class="text-lg text-on-surface-variant max-w-sm leading-relaxed font-light opacity-80">
+                    CS undergrad architecting systems from the ground up. I build tools for people, with a focus on performance and minimal complexity.
+                </p>
+<div class="pt-4">
+<a class="group inline-flex items-center gap-6 text-on-surface font-headline font-bold text-xs uppercase tracking-[0.3em] hover:text-tertiary transition-colors" href="#projects">
+                        View Work
+                        <span class="w-12 h-[1px] bg-outline group-hover:w-20 group-hover:bg-tertiary transition-all duration-500"></span>
+</a>
+</div>
+</div>
+<div class="lg:col-span-5 relative flex justify-end">
+<div class="relative w-full max-w-lg aspect-[3/4] lg:translate-x-12">
+<!-- Soft Radial Glow -->
+<div class="absolute inset-0 bg-white/[0.02] blur-[120px] rounded-full scale-150 -z-10"></div>
+<!-- Portrait -->
+<div class="relative z-10 w-full h-full overflow-hidden border border-white/5">
+<img alt="portrait" class="w-full h-full object-cover grayscale brightness-[0.8] hover:grayscale-0 transition-all duration-1000" id="main-portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAMjGKTFQDQUQSy3ZdpT7BQYxb6MqydHMdk6tjRgyM_paPdtcII863BbkduXnGvLWm_z7qDN_LeTdGZKhZufwsPz0wX6tdtIqNyO4Ox-Aagu4YwxU5zAzgOTNGFHlZ5DrfViGZY40LT2Fu4_OJMGA_MQlp7okA0qnI7e8Yy9UaRh0hcVvco3eWyV7qBeKNgh_ztJ3au_33WJDznt1clWcRtrdtizkUvv2nGHNdl7XgOmHbQoEK8hSALKCsJH8g24t2XlntKrGPypDF"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Now Section -->
+<section class="py-32 px-8 md:px-12" id="now">
+<div class="max-w-7xl mx-auto border-l border-outline/30 pl-12 md:ml-12">
+<div class="flex flex-col gap-6">
+<h2 class="text-[9px] font-mono uppercase tracking-[0.5em] text-on-surface-variant">— currently</h2>
+<div class="max-w-3xl">
+<p class="text-2xl md:text-3xl font-headline font-light text-on-surface leading-snug">
+                        Building <span class="italic text-tertiary">Lead Link CRM</span> and refining full-stack fundamentals. Focused on distributed systems and micro-interactions.
+                    </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Projects Section -->
+<section class="py-32 px-8 md:px-12" id="projects">
+<div class="max-w-7xl mx-auto space-y-32">
+<div class="flex justify-between items-end border-b border-outline/10 pb-12">
+<div class="space-y-4">
+<h2 class="text-[9px] font-mono uppercase tracking-[0.5em] text-on-surface-variant">/ Work</h2>
+<h3 class="text-4xl font-headline font-bold tracking-tight">Featured Projects</h3>
+</div>
+</div>
+<!-- Featured Project -->
+<div class="group relative grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+<div class="lg:col-span-7 order-2 lg:order-1 space-y-10">
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<h4 class="text-3xl font-headline font-bold">Lead Link CRM</h4>
+<span class="w-8 h-[1px] bg-outline"></span>
+<span class="text-[9px] font-mono uppercase tracking-widest text-on-surface-variant">2024</span>
+</div>
+<p class="text-on-surface-variant leading-relaxed text-lg font-light max-w-xl">
+                            A high-performance CRM for high-volume sales teams. Focused on real-time data sync and modular architecture. Striving for zero-latency operations.
+                        </p>
+</div>
+<div class="flex flex-wrap gap-6 items-center">
+<div class="flex gap-4">
+<span class="text-[9px] font-mono uppercase tracking-[0.2em] text-on-surface-variant">React</span>
+<span class="text-[9px] font-mono uppercase tracking-[0.2em] text-on-surface-variant">Node.js</span>
+<span class="text-[9px] font-mono uppercase tracking-[0.2em] text-on-surface-variant">PostgreSQL</span>
+</div>
+<a class="group/link inline-flex items-center gap-3 text-[10px] font-headline font-bold uppercase tracking-widest hover:text-tertiary transition-colors" href="#">
+                            Read Case Study 
+                            <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+<div class="lg:col-span-5 order-1 lg:order-2">
+<div class="aspect-[4/3] overflow-hidden bg-surface-container border border-white/5">
+<img alt="crm" class="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 group-hover:grayscale-0 group-hover:scale-[1.05] transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKc1k74Q1iV7qsJ6H4bbPuvd5I7GcZzKTup3U0XAk1jTw0T4TRsUXvGZb2ITxl92XE5mF3w_Khkd_6f9ZCU9zwQ0yrn8wiz7_9p1cQso30dNlQd2gpjr4NK0d-hLTgY4RF7Xj-HukTjVovRsopIfQFdx5b6mWTbAbxu3we0sQpCbgEbZxgr_ZXh2SCI8wFW8VAY9Ky1nF2hcu7AumSaLqi7HFiPfBXjWzXKLpl5mP3Tgy_sf22RnXJbdBVEmTV2MsWsePIDzi2e5FB"/>
+</div>
+</div>
+</div>
+<!-- Project Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+<!-- Project 2 -->
+<div class="space-y-8 group cursor-default">
+<div class="aspect-video bg-surface-container overflow-hidden border border-white/5">
+<img alt="project 2" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-80 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZTB31KFlptYPeJ1nlPhkw1VdtyhtCaPGT14cIFJMthRSuLkKPBr6aG0twbxfvCJUZGCFkyN1zxko1Jxrgs7QJBI4GhJxaQv50PZfjCHtaiPbgG9QToaISGPZGN5sWthp1B1W3xMzmcNjmt47Eoajbb3y0k7TQyk-RXujTQ8QSXepcreoVJOfvi4BTaoKJkge1b-uMvdvzCkQw0E0wuGPtKxq7fMbCVdP2KLJTNW3-AoYnA9M7ulUEakGq-3DwFLFqmRRKahM_ve-T"/>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-baseline">
+<h5 class="text-xl font-headline font-bold">Neural Schema</h5>
+<span class="text-[9px] font-mono text-on-surface-variant uppercase tracking-widest">2023</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed font-light line-clamp-2">
+                            Automated database schema generation using transformer models. Mapping relational structures to graph databases.
+                        </p>
+<div class="flex gap-4 pt-2">
+<span class="text-[8px] font-mono text-on-surface-variant uppercase tracking-widest border border-outline/30 px-2 py-0.5">Python</span>
+<span class="text-[8px] font-mono text-on-surface-variant uppercase tracking-widest border border-outline/30 px-2 py-0.5">TensorFlow</span>
+</div>
+</div>
+</div>
+<!-- Project 3 -->
+<div class="space-y-8 group cursor-default">
+<div class="aspect-video bg-surface-container overflow-hidden border border-white/5">
+<img alt="project 3" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-80 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjDSOGb2NUGZpGmfkyKYfEOuofMNPhy-RxCCLWxW3GL3ZqglVqdhDBavJacOVn2ijxZ4qRKc9bu8tMnus3RLIgyYFX7IyPlRmOIkwtOBUVQzw0uL-BJYCFOVps9E62ioNNvXCzcV-91CkJ9FTX8VKYvIaiSYolDa8N76lwp0nxfWR10vt3SvYceGJ-2jq6UzmnBuJTHX184G8SmhjRmOV_TgLxEqUx2Z64bdm6CPVtB6Qddw03JfZhIZdCGjjrvtz8kaJjBoeuYBRD"/>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-baseline">
+<h5 class="text-xl font-headline font-bold">Sentinel Auth</h5>
+<span class="text-[9px] font-mono text-on-surface-variant uppercase tracking-widest">2023</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed font-light line-clamp-2">
+                            Zero-trust authentication framework designed for edge computing. Biometric integration with low-latency.
+                        </p>
+<div class="flex gap-4 pt-2">
+<span class="text-[8px] font-mono text-on-surface-variant uppercase tracking-widest border border-outline/30 px-2 py-0.5">Rust</span>
+<span class="text-[8px] font-mono text-on-surface-variant uppercase tracking-widest border border-outline/30 px-2 py-0.5">Wasm</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Growth Section -->
+<section class="py-32 px-8 md:px-12 bg-surface-container-low/30" id="growth">
+<div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-24">
+<div class="lg:col-span-5 space-y-8">
+<h2 class="text-[9px] font-mono uppercase tracking-[0.5em] text-on-surface-variant">/ Growth</h2>
+<h3 class="text-4xl md:text-5xl font-headline font-bold leading-tight">Documenting the learning curve.</h3>
+<p class="text-on-surface-variant text-lg font-light leading-relaxed opacity-70">Continuous iteration of my technical stack and mental models. Striving for mastery over familiarity.</p>
+</div>
+<div class="lg:col-span-7 space-y-16">
+<div class="space-y-4 border-l border-white/5 pl-8 hover:border-white/20 transition-colors">
+<span class="text-[8px] font-mono text-tertiary uppercase tracking-widest">Phase 04 — Current</span>
+<h4 class="text-xl font-headline font-bold">Cloud Architecture &amp; Scaling</h4>
+<p class="text-on-surface-variant text-sm font-light leading-relaxed">Deep diving into AWS serverless patterns, Kubernetes orchestration, and terraform infrastructure as code.</p>
+</div>
+<div class="space-y-4 border-l border-white/5 pl-8 opacity-40 hover:opacity-100 transition-opacity">
+<span class="text-[8px] font-mono text-on-surface-variant uppercase tracking-widest">Phase 03</span>
+<h4 class="text-xl font-headline font-bold">Systems Interface Design</h4>
+<p class="text-on-surface-variant text-sm font-light leading-relaxed">Studying typography hierarchies, spacing systems, and accessibility-first architecture.</p>
+</div>
+<div class="space-y-4 border-l border-white/5 pl-8 opacity-40 hover:opacity-100 transition-opacity">
+<span class="text-[8px] font-mono text-on-surface-variant uppercase tracking-widest">Phase 02</span>
+<h4 class="text-xl font-headline font-bold">Backend Infrastructure</h4>
+<p class="text-on-surface-variant text-sm font-light leading-relaxed">Understanding SQL optimization, Redis caching layers, and event-driven architectures.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Beyond Building Section -->
+<section class="py-32 px-8 md:px-12" id="beyond">
+<div class="max-w-3xl mx-auto space-y-24">
+<div class="space-y-10">
+<h2 class="text-[9px] font-mono uppercase tracking-[0.5em] text-on-surface-variant">/ Perspective</h2>
+<h3 class="text-4xl font-headline font-bold">Beyond Building</h3>
+<p class="text-xl font-light text-on-surface/80 leading-relaxed">I believe the best engineers are those who understand the human systems they build for.</p>
+</div>
+<div class="grid grid-cols-1 gap-16">
+<div class="space-y-4">
+<h4 class="text-[9px] font-mono uppercase tracking-widest text-on-surface-variant">Leadership</h4>
+<p class="text-on-surface-variant leading-relaxed font-light">
+                        Serving as College President, managing community initiatives and bridging communication between 2k+ students and faculty. Focus on empathy-driven administration.
+                    </p>
+</div>
+<div class="space-y-4">
+<h4 class="text-[9px] font-mono uppercase tracking-widest text-on-surface-variant">Creative Interests</h4>
+<p class="text-on-surface-variant leading-relaxed font-light">
+                        Exploring urban geometry and street lighting through photography. Finding patterns in the chaos of city life.
+                    </p>
+</div>
+</div>
+<div class="flex flex-wrap gap-x-10 gap-y-4 pt-8">
+<span class="text-[9px] font-mono uppercase tracking-widest text-on-surface-variant/60">UI/UX Design</span>
+<span class="text-[9px] font-mono uppercase tracking-widest text-on-surface-variant/60">Street Photography</span>
+<span class="text-[9px] font-mono uppercase tracking-widest text-on-surface-variant/60">Open Source</span>
+<span class="text-[9px] font-mono uppercase tracking-widest text-on-surface-variant/60">Mentorship</span>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="py-48 px-8 md:px-12 border-t border-white/5" id="contact">
+<div class="max-w-7xl mx-auto flex flex-col items-center text-center space-y-16">
+<h2 class="text-6xl md:text-9xl font-headline font-bold text-on-surface/5 uppercase tracking-tighter select-none">GET_IN_TOUCH</h2>
+<div class="space-y-8">
+<p class="text-2xl text-on-surface-variant font-light">Let's talk about systems, products, or photography.</p>
+<a class="inline-block text-xl font-headline font-bold text-on-surface hover:text-tertiary transition-all duration-300" href="mailto:hello@algorithmic.identity">hello@algorithmic.identity</a>
+</div>
+<div class="flex flex-wrap justify-center gap-12 pt-8">
+<a class="text-[10px] font-mono uppercase tracking-[0.4em] text-on-surface-variant hover:text-on-surface transition-colors" href="#">GitHub</a>
+<a class="text-[10px] font-mono uppercase tracking-[0.4em] text-on-surface-variant hover:text-on-surface transition-colors" href="#">LinkedIn</a>
+<a class="text-[10px] font-mono uppercase tracking-[0.4em] text-on-surface-variant hover:text-on-surface transition-colors" href="#">Twitter</a>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full bg-surface py-20 border-t border-white/5">
+<div class="max-w-7xl mx-auto px-8 md:px-12 flex flex-col md:flex-row justify-between items-center gap-8">
+<p class="font-mono text-[8px] uppercase tracking-[0.4em] text-on-surface-variant/30">
+                © 2024 ALGORITHMIC_IDENTITY. All Rights Reserved.
+            </p>
+<div class="flex gap-12 font-mono text-[8px] uppercase tracking-[0.4em] text-on-surface-variant/30">
+<a class="hover:text-on-surface transition-colors" href="#">Source</a>
+<a class="hover:text-on-surface transition-colors" href="#">Archive</a>
+<a class="hover:text-on-surface transition-colors" href="#">Status</a>
+</div>
+</div>
+</footer>
+</main>
+<script>
+    // Scroll interaction for hero portrait
+    const stickyProfile = document.getElementById('sticky-profile');
+    const heroSection = document.getElementById('hero');
+
+    window.addEventListener('scroll', () => {
+        const heroHeight = heroSection.offsetHeight;
+        const scrollPos = window.scrollY;
+        
+        // Show sticky profile once we've scrolled past a portion of the hero
+        if (scrollPos > heroHeight * 0.4) {
+            stickyProfile.classList.add('visible');
+        } else {
+            stickyProfile.classList.remove('visible');
+        }
+    });
+</script>
+</body></html>
