@@ -33,6 +33,34 @@ export default function Hero() {
 
     useEffect(() => {
         setIsMobile(window.innerWidth < 768)
+
+        // Auto-snap scroll to give a seamless jump out of the Hero
+        let lastScrollY = window.scrollY
+        let timeoutId: NodeJS.Timeout
+
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY
+            const isScrollingDown = currentScrollY > lastScrollY
+            lastScrollY = currentScrollY
+
+            clearTimeout(timeoutId)
+
+            timeoutId = setTimeout(() => {
+                const y = window.scrollY
+                const h = window.innerHeight
+
+                // If user rests anywhere mid-hero, smartly snap them up or down
+                if (y > 5 && y < h - 5) {
+                    window.scrollTo({
+                        top: isScrollingDown ? h : 0,
+                        behavior: 'smooth'
+                    })
+                }
+            }, 80) // 80ms delay seamlessly prevents interrupting active wheel/trackpad swipes
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
     const { scrollYProgress } = useScroll({
@@ -129,25 +157,11 @@ export default function Hero() {
                                 alt="Prakyat Shetty"
                                 className="absolute inset-0 w-full h-full object-cover"
                                 style={{
-                                    maskImage: isMobile
-                                        ? 'radial-gradient(ellipse 65% 65% at 50% 55%, black 60%, transparent 100%)'
-                                        : 'radial-gradient(ellipse 60% 65% at 55% 55%, black 60%, transparent 100%)',
-                                    WebkitMaskImage: isMobile
-                                        ? 'radial-gradient(ellipse 65% 65% at 50% 55%, black 60%, transparent 100%)'
-                                        : 'radial-gradient(ellipse 60% 65% at 55% 55%, black 60%, transparent 100%)',
+                                    // Fades the image strictly from the bottom edge upwards in a flat, square line
+                                    // Binds exclusively to the transparent boundaries of the PNG
+                                    maskImage: 'linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 15%, black 40%, black 100%)',
+                                    WebkitMaskImage: 'linear-gradient(to top, transparent 0%, rgba(0,0,0,0.5) 15%, black 40%, black 100%)',
                                     filter: 'grayscale(25%) brightness(1) contrast(1.15)',
-                                }}
-                            />
-
-                            <div className="absolute inset-0 pointer-events-none"
-                                style={{
-                                    background: 'linear-gradient(90deg, rgba(255,255,255,0.02) 0%, transparent 20%, transparent 80%, rgba(59,91,177,0.05) 100%)',
-                                    maskImage: isMobile
-                                        ? 'radial-gradient(ellipse 65% 65% at 50% 55%, black 60%, transparent 100%)'
-                                        : 'radial-gradient(ellipse 60% 65% at 55% 55%, black 60%, transparent 100%)',
-                                    WebkitMaskImage: isMobile
-                                        ? 'radial-gradient(ellipse 65% 65% at 50% 55%, black 60%, transparent 100%)'
-                                        : 'radial-gradient(ellipse 60% 65% at 55% 55%, black 60%, transparent 100%)',
                                 }}
                             />
                         </motion.div>
@@ -155,9 +169,32 @@ export default function Hero() {
 
                 </motion.div>
 
-                <div className="absolute bottom-0 w-full h-32 md:h-48 pointer-events-none"
-                    style={{ background: 'linear-gradient(to top, #05070A 0%, transparent 100%)' }}
-                />
+                {/* Fading bottom glow tied directly to scroll state! */}
+                <motion.div style={{ opacity: glowOpacity }} className="absolute bottom-0 left-0 w-full h-[50vh] pointer-events-none">
+                    {/* Layer 1 — Base dark fade (renders behind everything) */}
+                    <div
+                        className="absolute inset-x-0 bottom-0 h-full"
+                        style={{
+                            background: 'linear-gradient(to top, rgba(5,7,10,1) 5%, rgba(5,7,10,0.9) 30%, rgba(5,7,10,0.4) 60%, transparent 100%)',
+                        }}
+                    />
+                    {/* Layer 2 — Mid dark-blue haze in lowest third */}
+                    <div
+                        className="absolute inset-x-0 bottom-0 h-1/3"
+                        style={{
+                            background: 'linear-gradient(to top, rgba(10, 18, 45, 0.5) 0%, transparent 100%)',
+                        }}
+                    />
+                    {/* Layer 3 — Atmospheric glow (renders on top so it isn't hidden) */}
+                    <div
+                        className="absolute inset-x-0 bottom-0 h-[60%]"
+                        style={{
+                            background: 'radial-gradient(ellipse 100% 70% at 50% 100%, rgba(60, 100, 220, 0.35) 0%, rgba(40, 70, 180, 0.12) 45%, transparent 75%)',
+                            filter: 'blur(20px)',
+                            mixBlendMode: 'screen',
+                        }}
+                    />
+                </motion.div>
             </div>
         </section>
     )
