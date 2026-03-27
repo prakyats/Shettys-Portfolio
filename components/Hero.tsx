@@ -6,10 +6,12 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 const PORTRAIT_URL = '/prakyat.png'
 
 const LINES = [
-    { type: 'greeting', delay: 0.4, duration: 1.0, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], y: 8 },
-    { type: 'name', delay: 0.9, duration: 1.2, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], y: 12 },
-    { type: 'phil-1', delay: 1.8, duration: 1.2, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], y: 8 },
-    { type: 'phil-2', delay: 2.1, duration: 1.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], y: 6 },
+    { type: 'greeting', delay: 0.2, duration: 0.7, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], y: 10 },
+    { type: 'firstName', delay: 0.45, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], y: 12 },
+    { type: 'lastName', delay: 0.60, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], y: 12 },
+    { type: 'phil-1', delay: 1.0, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], y: 8 },
+    { type: 'phil-2', delay: 1.15, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], y: 8 },
+    { type: 'phil-3', delay: 1.3, duration: 1.0, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], y: 8 },
 ]
 
 function lineAnim(cfg: typeof LINES[0], isMobile: boolean) {
@@ -17,8 +19,8 @@ function lineAnim(cfg: typeof LINES[0], isMobile: boolean) {
     const mobileDurMult = 0.75
 
     return {
-        initial: { opacity: 0, y: isMobile ? cfg.y * 0.7 : cfg.y },
-        animate: { opacity: 1, y: 0 },
+        initial: { opacity: 0, y: isMobile ? 0 : cfg.y, x: isMobile ? 24 : 0 },
+        animate: { opacity: 1, y: 0, x: 0 },
         transition: {
             duration: isMobile ? cfg.duration * mobileDurMult : cfg.duration,
             ease: cfg.ease,
@@ -33,34 +35,6 @@ export default function Hero() {
 
     useEffect(() => {
         setIsMobile(window.innerWidth < 768)
-
-        // Auto-snap scroll to give a seamless jump out of the Hero
-        let lastScrollY = window.scrollY
-        let timeoutId: NodeJS.Timeout
-
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY
-            const isScrollingDown = currentScrollY > lastScrollY
-            lastScrollY = currentScrollY
-
-            clearTimeout(timeoutId)
-
-            timeoutId = setTimeout(() => {
-                const y = window.scrollY
-                const h = window.innerHeight
-
-                // If user rests anywhere mid-hero, smartly snap them up or down
-                if (y > 5 && y < h - 5) {
-                    window.scrollTo({
-                        top: isScrollingDown ? h : 0,
-                        behavior: 'smooth'
-                    })
-                }
-            }, 80) // 80ms delay seamlessly prevents interrupting active wheel/trackpad swipes
-        }
-
-        window.addEventListener('scroll', handleScroll, { passive: true })
-        return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
     const { scrollYProgress } = useScroll({
@@ -80,7 +54,7 @@ export default function Hero() {
 
     return (
         <section ref={heroRef} id="hero" className="relative h-screen bg-[#05070A]">
-            <div className="relative h-full w-full overflow-hidden flex items-center pt-10 md:pt-0">
+            <div className="relative h-full w-full overflow-hidden flex items-start md:items-center pt-[15vh] md:pt-0">
 
                 {/* Background glow */}
                 <motion.div className="absolute right-0 top-0 w-full h-full pointer-events-none" style={{ opacity: glowOpacity }}>
@@ -105,41 +79,53 @@ export default function Hero() {
                 >
 
                     {/* LEFT */}
-                    <div className="lg:col-span-7 flex flex-col justify-end lg:justify-center pt-8 md:pt-0">
+                    <div className="lg:col-span-7 flex flex-col justify-end lg:justify-center pt-0 md:pt-0">
 
-                        <motion.div {...lineAnim(LINES[0], isMobile)} className="mb-3 lg:mb-6">
-                            <span className="text-white/50 text-lg md:text-2xl font-light tracking-wide">
-                                Hey there, I'm
+                        <motion.div
+                            {...lineAnim(LINES[0], isMobile)}
+                            className="mb-2 md:mb-3 z-10 relative saturate-0 translate-y-3 md:translate-y-4"
+                        >
+                            <span className="text-white/75 text-base md:text-xl font-light tracking-[0.1em] leading-none block">
+                                Hey, I'm
                             </span>
                         </motion.div>
 
-                        <motion.div {...lineAnim(LINES[1], isMobile)} className="mb-8 lg:mb-14">
-                            <h1 className="font-['Georgia',_serif] font-bold leading-[0.95] tracking-[-0.02em] text-white"
-                                style={{ fontSize: 'clamp(3.5rem, 12vw, 8.5rem)' }}
+                        <div className="mb-6 md:mb-8 lg:mb-10 relative z-0">
+                            <h1 className="font-['Georgia',_serif] leading-[0.8] tracking-[0.035em] flex flex-col"
+                                style={{ fontSize: 'clamp(4rem, 13vw, 9rem)' }}
                             >
-                                Prakyat<br className="hidden sm:block" />
-                                <span className="sm:hidden">Shetty</span>
-                                <span className="hidden sm:inline">Shetty</span>
+                                <motion.span {...lineAnim(LINES[1], isMobile)} className="font-bold text-white drop-shadow-sm">
+                                    Prakyat
+                                </motion.span>
+                                <motion.span {...lineAnim(LINES[2], isMobile)} className="font-medium text-[rgba(255,255,255,0.96)]">
+                                    Shetty
+                                </motion.span>
                             </h1>
-                        </motion.div>
+                        </div>
 
-                        <div className="flex flex-col gap-3 lg:gap-2 font-headline tracking-wide" style={{ fontSize: 'clamp(1.2rem, 4vw, 2.5rem)' }}>
-                            <motion.div {...lineAnim(LINES[2], isMobile)}>
-                                <span className="text-white/80 font-medium">Learning. Building.</span>
+                        <div className="flex flex-col font-headline tracking-wide leading-[1.05]" style={{ fontSize: 'clamp(1.3rem, 4.2vw, 2.8rem)' }}>
+                            <motion.div {...lineAnim(LINES[3], isMobile)} className="mb-[-2px] md:mb-[-6px]">
+                                <span className="text-white font-medium">Learning. Building.</span>
                             </motion.div>
 
-                            <motion.div {...lineAnim(LINES[3], isMobile)}>
-                                <span className="text-white/50 font-normal">Getting better </span>
-                                <span className="text-white/30 font-light block sm:inline">every day.</span>
+                            <motion.div {...lineAnim(LINES[4], isMobile)}>
+                                <span className="text-[rgba(255,255,255,0.85)] font-normal">Getting better</span>
+                            </motion.div>
+
+                            <motion.div {...lineAnim(LINES[5], isMobile)}>
+                                <span className="text-[rgba(255,255,255,0.76)] font-light">every day.</span>
                             </motion.div>
                         </div>
                     </div>
 
                     {/* RIGHT */}
-                    <div className="lg:col-span-5 relative flex justify-start lg:justify-center items-start lg:items-center h-[38vh] md:h-[50vh] lg:h-[80vh] w-full mt-4 lg:mt-0 xl:-ml-6 lg:-ml-2">
+                    <div className="lg:col-span-5 relative flex justify-start lg:justify-center items-start lg:items-center h-auto md:h-[50vh] lg:h-[80vh] w-full mt-2 lg:mt-0 xl:-ml-6 lg:-ml-2">
                         <motion.div
-                            initial={{ opacity: 0, filter: 'blur(16px)', y: 14, scale: 1.015 }}
-                            animate={{ opacity: 1, filter: 'blur(0px)', y: 0, scale: 1 }}
+                            initial={isMobile 
+                                ? { opacity: 0, filter: 'blur(16px)', x: -24, y: 0, scale: 1.015 }
+                                : { opacity: 0, filter: 'blur(16px)', x: 0, y: 14, scale: 1.015 }
+                            }
+                            animate={{ opacity: 1, filter: 'blur(0px)', x: 0, y: 0, scale: 1 }}
                             transition={{ duration: isMobile ? 1.8 : 3.0, ease: [0.16, 1, 0.3, 1], delay: isMobile ? 0.1 : 0.25 }}
                             style={{ y: portraitY, scale: portraitScale }}
                             className="relative w-full max-w-[420px] md:max-w-[520px] lg:max-w-[650px] aspect-[4/5]"
