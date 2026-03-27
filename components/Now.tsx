@@ -1,37 +1,47 @@
 'use client'
 
-import { motion } from 'framer-motion'
-
-const fadeUp = {
-    hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
-}
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef } from 'react'
 
 export default function Now() {
+    const ref = useRef(null)
+
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ['start 90%', 'start 40%'],
+    })
+
+    const opacity = useTransform(scrollYProgress, [0, 1], [0, 1])
+    const y = useTransform(scrollYProgress, [0, 1], [40, 0])
+
     return (
-        <section id="now" className="py-24 md:py-32 px-8 md:px-12">
-            <motion.div
-                className="max-w-7xl mx-auto border-l border-white/[0.06] pl-10 md:ml-12"
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: '-80px' }}
-                variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }}
-            >
-                <motion.h2
-                    variants={fadeUp}
-                    className="text-[9px] font-mono uppercase tracking-[0.5em] text-white/30 mb-6"
-                >
+        <motion.section
+            ref={ref}
+            style={{ opacity, y }}
+            className="relative -mt-[14vh] md:-mt-[18vh] pt-[20vh] pb-24 md:pb-32 px-8 md:px-12"
+        >
+
+            {/* 🔥 TOP GLOW BRIDGE */}
+            <div className="absolute top-0 left-0 w-full h-32 pointer-events-none"
+                style={{
+                    background: 'radial-gradient(ellipse 100% 60% at 50% 0%, rgba(60,100,220,0.12), transparent 80%)',
+                    filter: 'blur(20px)'
+                }}
+            />
+
+            <div className="max-w-7xl mx-auto border-l border-white/[0.06] pl-10 md:ml-12">
+
+                <h2 className="text-[9px] font-mono uppercase tracking-[0.5em] text-white/30 mb-6">
                     — currently
-                </motion.h2>
-                <motion.div variants={fadeUp} className="max-w-3xl">
-                    <p className="text-2xl md:text-3xl font-headline font-light text-white/90 leading-snug">
-                        Building{' '}
-                        <span className="italic text-white/50">Lead Link CRM</span> and
-                        refining full-stack fundamentals. Focused on distributed systems and
-                        micro-interactions.
-                    </p>
-                </motion.div>
-            </motion.div>
-        </section>
+                </h2>
+
+                <p className="text-2xl md:text-3xl text-white/90 leading-snug max-w-3xl">
+                    Building <span className="italic text-white/50">Lead Link CRM</span> and
+                    refining full-stack fundamentals. Focused on distributed systems and
+                    micro-interactions.
+                </p>
+
+            </div>
+        </motion.section>
     )
 }
